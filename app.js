@@ -7,6 +7,8 @@ app.use(express.json());
 
 const db = require('./data/db');
 
+app.put('/api/users/:id', editSelectedUser)
+app.delete('/api/users/:id', deleteSelectedUser)
 app.post('/api/users', createNewUser)
 app.get('/api/users/:id', getUserById)
 app.get('/api/users', getAllUsers);
@@ -15,6 +17,31 @@ app.use('*', (req, res) => res.status(404).json({
     message: 'This route does not exist',
   }));
 
+
+function editSelectedUser(req, res) {
+    const user = req;
+    const { id  } = req.params;
+    db.update(id, user)
+        .then(data => {
+          res.status(200).json(data);
+        })
+        .error(err => {
+            res.status(404).json(err);
+        })
+}
+
+function deleteSelectedUser(req, res) {
+    const { id } = req.params;
+    db.remove(id)
+        .then(data => {
+            res.status(200).json(data);
+            // res.text('Deleted successfully');            
+        })
+        .error(err => {
+            console.log(err);
+            res.status(404).json(err);
+        })
+    }
 function createNewUser(req, res) {
     const newUser = {
         name: req.body.name,
@@ -39,7 +66,6 @@ function getUserById(req, res) {
     const { id } = req.params;
     db.findById(id)
         .then(data => {
-            // console.log(data)
             res.status(200).json(data);
         })
         .error(err => {
