@@ -33,13 +33,18 @@ function editSelectedUser(req, res) {
 function deleteSelectedUser(req, res) {
     const { id } = req.params;
     db.remove(id)
-        .then(data => {
-            res.status(200).json(data);
-            // res.text('Deleted successfully');            
+        .then(deletedUser => {
+            if(deletedUser) {
+                res.status(204).end();
+            } else {
+                res.status(404).json({
+                    message: 'User not found'
+                })
+            }
         })
-        .error(err => {
+        .catch(err => {
             console.log(err);
-            res.status(404).json(err);
+            res.status(500).json(err);
         })
     }
 function createNewUser(req, res) {
@@ -50,7 +55,7 @@ function createNewUser(req, res) {
     }
     db.insert(newUser)
         .then(res => {
-            console.log(data);
+            // console.log(data);
             db.find(data).then(newlyCreatedUser => {
                 res.status(200).json(data); 
             })
