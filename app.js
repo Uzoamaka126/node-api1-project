@@ -19,14 +19,27 @@ app.use('*', (req, res) => res.status(404).json({
 
 
 function editSelectedUser(req, res) {
-    const user = req;
     const { id  } = req.params;
-    db.update(id, user)
-        .then(data => {
-          res.status(200).json(data);
+    const updates = req.body;
+    // const foundUser = db.find(user => user.id === id);
+
+    db.update(id, updates)
+        .then(user=> {
+            if(user) {
+                res.status(200).json({
+                    success: 'true',
+                    message: 'User has been sucessfully found',
+                    user,
+                });
+            } else {
+                return res.status(404).send({
+                    success: 'false',
+                    message: 'This user does not exist'
+                })
+            }
         })
         .error(err => {
-            res.status(404).json(err);
+            res.status(500).json(err);
         })
 }
 
