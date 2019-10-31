@@ -4,23 +4,33 @@
   "description": "WEB API I Challenge",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "server": "nodemon index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LambdaSchool/webapi-i-challenge.git"
   },
-  "keywords": [],
+  "keywords": [
+    "example",
+    "heroku"
+  ],
   "author": "Lambda School",
   "bugs": {
     "url": "https://github.com/LambdaSchool/webapi-i-challenge/issues"
   },
   "homepage": "https://github.com/LambdaSchool/webapi-i-challenge#readme",
   "devDependencies": {
-    "nodemon": "^1.19.3"
+    "nodemon": "^1.19.4"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "knex": "^0.19.4",
     "sqlite3": "^4.1.0"
+  },
+  "engines": {
+    "node": "10.16.3"
   }
 }

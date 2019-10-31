@@ -19,7 +19,7 @@ function findById(id) {
     .where({ id: Number(id) })
     .first();
 }
-
+// 
 function insert(user) {
   return db('users')
     .insert(user)
