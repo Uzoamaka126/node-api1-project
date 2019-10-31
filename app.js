@@ -70,7 +70,7 @@ function createNewUser(req, res) {
         .then(res => {
             // console.log(data);
             db.find(data).then(newlyCreatedUser => {
-                res.status(200).json(data); 
+                res.status(201).json(data); 
             })
         })
         .catch(err => {
